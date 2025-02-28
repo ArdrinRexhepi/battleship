@@ -9,6 +9,7 @@ import {
 import { PlayerType } from "@/lib/types";
 import { Trophy } from "lucide-react";
 import Link from "next/link";
+import Leaderboard from "./Leaderboard";
 
 interface GameOverProps {
   winner: PlayerType | null;
@@ -17,14 +18,14 @@ interface GameOverProps {
 
 export default function GameOver({ winner, onPlayAgain }: GameOverProps) {
   return (
-    <div className="flex min-h-[50vh] items-center justify-center p-4">
+    <div className="flex items-center justify-center p-4 flex-col gap-2 w-full">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl">Game Over</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col items-center space-y-6 py-6">
+        <CardContent className="flex flex-col items-center space-y-4 py-4">
           {winner ? (
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-2">
               <Trophy className="h-16 w-16 text-yellow-500" />
               <h2 className="text-2xl font-bold">
                 Player{" "}
@@ -49,6 +50,8 @@ export default function GameOver({ winner, onPlayAgain }: GameOverProps) {
           </Link>
         </CardFooter>
       </Card>
+
+      <Leaderboard />
     </div>
   );
 }

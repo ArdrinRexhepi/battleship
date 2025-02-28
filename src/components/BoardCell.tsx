@@ -53,7 +53,11 @@ const BoardCell = ({
         // Our visible ship
         !isSunkenShip && isVisibleShipCell && "bg-blue-200 hover:bg-blue-100"
       )}
-      onClick={handleClick ? () => handleClick(row, column) : undefined}>
+      onClick={
+        handleClick
+          ? () => (!cell.isCellHit ? handleClick(row, column) : undefined)
+          : undefined
+      }>
       {/* Show a checkmark for sunken ships */}
       {isSunkenShip &&
         (isEnemy ? (

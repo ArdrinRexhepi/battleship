@@ -20,8 +20,10 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
+import { useScoreBoard } from "@/_store";
 
 const MultiPlayerMode = () => {
+  const { addWinFor } = useScoreBoard();
   const [winner, setWinner] = useState<PlayerType | null>(null);
   const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
   const [gameState, setGameState] =
@@ -68,9 +70,12 @@ const MultiPlayerMode = () => {
           }
           setPlayer2Ships(tempShips);
         }
+
+        //if all ships have sunk then add declare winner
         const allSunk = tempShips.every((ship) => ship.hasShipSunk);
         if (allSunk) {
           setWinner(currentPlayer);
+          addWinFor(currentPlayer);
           setGameState("GameOver");
           return;
         }
@@ -104,9 +109,11 @@ const MultiPlayerMode = () => {
           }
           setPlayer1Ships(tempShips);
         }
+        //if all ships have sunk then add declare winner
         const allSunk = tempShips.every((ship) => ship.hasShipSunk);
         if (allSunk) {
           setWinner(currentPlayer);
+          addWinFor(currentPlayer);
           setGameState("GameOver");
           return;
         }
