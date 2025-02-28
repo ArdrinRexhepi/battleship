@@ -110,8 +110,6 @@ const ShipPlacement = ({
       //We update the placed ships state with the new ship
       setPlacedShips([...placedShips, newShip]);
       setCurrentShipType(null);
-      // const nextShip = getAvailableShipTypes()[0];
-      // setCurrentShipType(nextShip);
     },
     [currentShipType, orientation, placedShips]
   );

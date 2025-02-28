@@ -67,7 +67,7 @@ const BoardCell = ({
         <Check className="text-white m-auto" />
       )}
 
-      {/* Show an X for missed shots */}
+      {/* Show an X for missed attacks */}
       {isEmptyHitCell && <X className="text-red-600 m-auto" />}
     </div>
   );

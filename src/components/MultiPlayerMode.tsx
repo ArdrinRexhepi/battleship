@@ -23,7 +23,6 @@ import { Button } from "./ui/button";
 
 const MultiPlayerMode = () => {
   const [winner, setWinner] = useState<PlayerType | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
   const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
   const [gameState, setGameState] =
     useState<MultiPlayerSteps>("PlayerOnePlacement");
@@ -36,12 +35,6 @@ const MultiPlayerMode = () => {
 
   const [player1Ships, setPlayer1Ships] = useState<Ship[]>([]);
   const [player2Ships, setPlayer2Ships] = useState<Ship[]>([]);
-
-  // useEffect(() => {
-  //   if (gameState === "Playing") {
-  //     setCurrentPlayer("player1");
-  //   }
-  // }, [gameState]);
 
   const changeGameState = (newState: MultiPlayerSteps) => {
     setGameState(newState);
@@ -72,9 +65,6 @@ const MultiPlayerMode = () => {
           );
           if (isShipSunk) {
             tempShips[shipCoordinate].hasShipSunk = true;
-            setMessage("Attack was successful. You sunk a ship!");
-          } else {
-            setMessage("Attack was successful. You hit a ship!");
           }
           setPlayer2Ships(tempShips);
         }
@@ -111,9 +101,6 @@ const MultiPlayerMode = () => {
           );
           if (isShipSunk) {
             tempShips[shipCoordinate].hasShipSunk = true;
-            setMessage("Attack was successful. You sunk a ship!");
-          } else {
-            setMessage("Attack was successful. You hit a ship!");
           }
           setPlayer1Ships(tempShips);
         }
@@ -135,7 +122,6 @@ const MultiPlayerMode = () => {
     setPlayer1Ships([]);
     setPlayer2Ships([]);
     setWinner(null);
-    setMessage(null);
     setCurrentPlayer(null);
     setGameState("PlayerOnePlacement");
   };
