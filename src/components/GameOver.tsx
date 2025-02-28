@@ -36,7 +36,7 @@ export default function GameOver({ winner, onPlayAgain }: GameOverProps) {
               </h2>
             </div>
           ) : (
-            <h2 className="text-2xl font-bold">It's a Draw!</h2>
+            <h2 className="text-2xl font-bold">It&apos;s a Draw!</h2>
           )}
         </CardContent>
         <CardFooter className="flex justify-center pb-6 gap-2">

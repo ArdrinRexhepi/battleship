@@ -45,7 +45,7 @@ export default function Home() {
           <CardContent className="p-6 flex flex-col items-center">
             <p className="text-blue-100 text-center mb-8 max-w-lg">
               Command your fleet, position your ships well and destroy your
-              enemy's ship before they destroy your ships.
+              enemy&apos;s ship before they destroy your ships.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-8">
@@ -106,7 +106,7 @@ export default function Home() {
                       1. Each player has a fleet of 5 ships of varying lengths
                     </p>
                     <p>2. Place your ships strategically on your grid</p>
-                    <p>3. Take turns firing at your opponent's grid</p>
+                    <p>3. Take turns firing at your opponent&apos;s grid</p>
                     <p>4. First to sink all enemy ships wins</p>
                   </div>
                 </DialogContent>

@@ -8,7 +8,7 @@ import {
   PlayerType,
   Ship,
 } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShipPlacement from "./ShipPlacement";
 import Board from "./Board";
 import GameOver from "./GameOver";
