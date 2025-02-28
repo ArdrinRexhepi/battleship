@@ -14,6 +14,7 @@ import { createEmptyBoard, isShipPlacementValid } from "@/lib/helpers";
 import {
   CellType,
   MultiPlayerSteps,
+  PlayerType,
   Ship,
   ShipType,
   SinglePlayerSteps,
@@ -40,6 +41,7 @@ const ShipPlacement = ({
   changeGameState,
   placedShips,
   setPlacedShips,
+  setCurrentPlayer,
 }: {
   board: CellType[][];
   setBoard: Dispatch<SetStateAction<CellType[][]>>;
@@ -47,12 +49,11 @@ const ShipPlacement = ({
   changeGameState: (newState: MultiPlayerSteps | SinglePlayerSteps) => void;
   placedShips: Ship[];
   setPlacedShips: Dispatch<SetStateAction<Ship[]>>;
+  setCurrentPlayer: Dispatch<SetStateAction<PlayerType | null>>;
 }) => {
-  // const [board, setBoard] = useState<CellType[][]>(createEmptyBoard());
   const [currentShipType, setCurrentShipType] = useState<ShipType | null>(
     "carrier"
   );
-  // const [placedShips, setPlacedShips] = useState<Ship[]>([]);
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
     "horizontal"
   );
@@ -131,6 +132,7 @@ const ShipPlacement = ({
       changeGameState("PlayerTwoPlacement");
     }
     if (gameState === "PlayerTwoPlacement") {
+      setCurrentPlayer("player1");
       changeGameState("Playing");
     }
   }, [gameState]);
@@ -218,7 +220,6 @@ const ShipPlacement = ({
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      {/* Board */}
       <div className="flex flex-col border-2 border-zinc-500">
         <Board
           board={board}
@@ -226,21 +227,6 @@ const ShipPlacement = ({
           showShips={true}
           ships={placedShips}
         />
-        {/* {board.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex">
-            {row.map((cell, columnIndex) => (
-              <div
-                key={`${rowIndex}-${columnIndex}`}
-                className={cn(
-                  "size-8 border border-zinc-300 bg-zinc-100 hover:cursor-pointer transition-all duration-200 hover:bg-blue-100",
-                  cell.isCellHit && "bg-red-500",
-                  cell.isShipPart && "bg-blue-200"
-                )}
-                onClick={() => handleCellClick(rowIndex, columnIndex)}
-              />
-            ))}
-          </div>
-        ))} */}
       </div>
     </div>
   );

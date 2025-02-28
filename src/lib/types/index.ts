@@ -1,5 +1,5 @@
 export type ModeType = 'multiplayer' | 'computer'
-export type MultiPlayerSteps = 'PlayerOnePlacement' | 'PlayerTwoPlacement' | 'Playing' | 'GameOver';
+export type MultiPlayerSteps = 'PlayerOnePlacement' |'PlayerTwoPlacement' | 'Switching' |'Playing' | 'GameOver';
 export type SinglePlayerSteps = 'PlayerPlacement' | 'PlayerTurn' | 'ComputerTurn' | 'GameOver';
 export type GameSteps = MultiPlayerSteps | SinglePlayerSteps;
 export type PlayerType = 'player1' | 'player2';
