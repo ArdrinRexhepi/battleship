@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { createEmptyBoard, processAttack } from "@/lib/helpers";
 import { GameSteps, MultiPlayerSteps, PlayerType } from "@/lib/types";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ShipPlacement from "./ShipPlacement";
 import Board from "./Board";
 import GameOver from "./GameOver";
@@ -60,42 +60,56 @@ const MultiPlayerMode = () => {
     setGameState(newState);
   };
 
-  const handleCellAttack = (row: number, column: number) => {
-    //Based on the player we process the attack
-    if (currentPlayer === "player1") {
-      const { updatedBoard, updatedShips, isGameOver } = processAttack(
-        player2Board,
-        player2Ships,
-        row,
-        column
-      );
+  const handleCellAttack = useCallback(
+    (row: number, column: number) => {
+      if (currentPlayer === "player1") {
+        const { updatedBoard, updatedShips, isGameOver } = processAttack(
+          player2Board,
+          player2Ships,
+          row,
+          column
+        );
 
-      setPlayer2Board(updatedBoard);
-      setPlayer2Ships(updatedShips);
+        setPlayer2Board(updatedBoard);
+        setPlayer2Ships(updatedShips);
 
-      if (isGameOver) {
-        onGameFinish(currentPlayer);
-        return;
+        if (isGameOver) {
+          onGameFinish(currentPlayer);
+          return;
+        }
+      } else if (currentPlayer === "player2") {
+        const { updatedBoard, updatedShips, isGameOver } = processAttack(
+          player1Board,
+          player1Ships,
+          row,
+          column
+        );
+
+        setPlayer1Board(updatedBoard);
+        setPlayer1Ships(updatedShips);
+
+        if (isGameOver) {
+          onGameFinish(currentPlayer);
+          return;
+        }
       }
-    } else if (currentPlayer === "player2") {
-      const { updatedBoard, updatedShips, isGameOver } = processAttack(
-        player1Board,
-        player1Ships,
-        row,
-        column
-      );
-
-      setPlayer1Board(updatedBoard);
-      setPlayer1Ships(updatedShips);
-
-      if (isGameOver) {
-        onGameFinish(currentPlayer);
-        return;
-      }
-    }
-
-    setGameState("Switching");
-  };
+      setGameState("Switching");
+    },
+    [
+      currentPlayer,
+      player1Board,
+      player2Board,
+      player1Ships,
+      player2Ships,
+      processAttack,
+      setPlayer1Board,
+      setPlayer2Board,
+      setPlayer1Ships,
+      setPlayer2Ships,
+      onGameFinish,
+      setGameState,
+    ]
+  );
 
   const restartGame = () => {
     setPlayer1Board(createEmptyBoard());

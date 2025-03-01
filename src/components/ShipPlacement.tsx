@@ -24,7 +24,7 @@ import {
   ShipType,
   SinglePlayerSteps,
 } from "@/lib/types";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
@@ -126,10 +126,10 @@ const ShipPlacement = ({
     toast.success("Ships auto-placed successfully!");
   };
 
-  const getAvailableShipTypes = () => {
+  const availableShipTypes = useMemo(() => {
     const placedShipTypes = placedShips.map((ship) => ship.type);
     return shipTypes.filter((shipType) => !placedShipTypes.includes(shipType));
-  };
+  }, [placedShips]);
 
   const resetAll = () => {
     setBoard(createEmptyBoard());
@@ -157,8 +157,8 @@ const ShipPlacement = ({
       <div className="flex gap-2 items-center flex-col border rounded-md p-2 bg-neutral-100 max-w-2xl">
         {/* Ships we can place */}
         <div className="flex gap-2 max-sm:grid grid-cols-3">
-          {getAvailableShipTypes().length > 0 ? (
-            getAvailableShipTypes().map((shipType) => (
+          {availableShipTypes.length > 0 ? (
+            availableShipTypes.map((shipType) => (
               <div
                 key={shipType}
                 onClick={() => setCurrentShipType(shipType)}
