@@ -1,13 +1,17 @@
 "use client";
-
-import { createEmptyBoard } from "@/lib/helpers";
 import {
-  CellType,
-  GameSteps,
-  MultiPlayerSteps,
-  PlayerType,
-  Ship,
-} from "@/lib/types";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { createEmptyBoard } from "@/lib/helpers";
+import { GameSteps, MultiPlayerSteps, PlayerType } from "@/lib/types";
 import { useState } from "react";
 import ShipPlacement from "./ShipPlacement";
 import Board from "./Board";
@@ -19,24 +23,38 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Button } from "./ui/button";
-import { useScoreBoard } from "@/_store";
+import { Button, buttonVariants } from "./ui/button";
+import { useBoardState, useScoreBoard } from "@/_store";
+import { cn } from "@/lib/utils";
 
 const MultiPlayerMode = () => {
   const { addWinFor } = useScoreBoard();
+  const {
+    player1Board,
+    setPlayer1Board,
+    player2Board,
+    setPlayer2Board,
+    player1Ships,
+    setPlayer1Ships,
+    player2Ships,
+    setPlayer2Ships,
+    currentPlayer,
+    setCurrentPlayer,
+    gameState,
+    setGameState,
+  } = useBoardState();
   const [winner, setWinner] = useState<PlayerType | null>(null);
-  const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
-  const [gameState, setGameState] =
-    useState<MultiPlayerSteps>("PlayerOnePlacement");
-  const [player1Board, setPlayer1Board] = useState<CellType[][]>(
-    createEmptyBoard()
-  );
-  const [player2Board, setPlayer2Board] = useState<CellType[][]>(
-    createEmptyBoard()
-  );
 
-  const [player1Ships, setPlayer1Ships] = useState<Ship[]>([]);
-  const [player2Ships, setPlayer2Ships] = useState<Ship[]>([]);
+  const onGameFinish = (currentPlayer: PlayerType) => {
+    setWinner(currentPlayer);
+    addWinFor(currentPlayer);
+    setPlayer1Board(createEmptyBoard());
+    setPlayer2Board(createEmptyBoard());
+    setPlayer1Ships([]);
+    setPlayer2Ships([]);
+    setCurrentPlayer(null);
+    setGameState("GameOver");
+  };
 
   const changeGameState = (newState: MultiPlayerSteps) => {
     setGameState(newState);
@@ -74,9 +92,7 @@ const MultiPlayerMode = () => {
         //if all ships have sunk then add declare winner
         const allSunk = tempShips.every((ship) => ship.hasShipSunk);
         if (allSunk) {
-          setWinner(currentPlayer);
-          addWinFor(currentPlayer);
-          setGameState("GameOver");
+          onGameFinish(currentPlayer);
           return;
         }
       }
@@ -112,9 +128,7 @@ const MultiPlayerMode = () => {
         //if all ships have sunk then add declare winner
         const allSunk = tempShips.every((ship) => ship.hasShipSunk);
         if (allSunk) {
-          setWinner(currentPlayer);
-          addWinFor(currentPlayer);
-          setGameState("GameOver");
+          onGameFinish(currentPlayer);
           return;
         }
       }
@@ -190,12 +204,36 @@ const MultiPlayerMode = () => {
 
   if (gameState === "Playing" && currentPlayer != null) {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col p-5">
         <div className="flex flex-col items-center">
-          <h1 className="text-2xl font-bold">
-            {currentPlayer === "player1" && "Player 1 Turn to attack"}{" "}
-            {currentPlayer === "player2" && "Player 2 Turn to attack"}
-          </h1>
+          <div className="flex items-center flex-col gap-2">
+            <h1 className="text-2xl font-bold">
+              {currentPlayer === "player1" && "Player 1 Turn to attack"}{" "}
+              {currentPlayer === "player2" && "Player 2 Turn to attack"}
+            </h1>
+            <AlertDialog>
+              <AlertDialogTrigger
+                className={cn(buttonVariants({ variant: "destructive" }))}>
+                Restart Game
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will reset the game!
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={restartGame}
+                    className="hover:cursor-pointer">
+                    Restart
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
 
           <div className="flex gap-12">
             <div className="flex flex-col gap-2">
