@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Battleship game for
 
-## Getting Started
-
-First, run the development server:
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/ArdrinRexhepi/battleship.git
+cd battleship
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Start the development server
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the game.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Multiplayer Mode**: Play against a friend on the same device
+- **Ship Placement**:
+  - Manual placement with drag-and-drop functionality
+  - Auto-placement feature for quick game setup
+  - Support for vertical and horizontal ship orientations
+- **Game Mechanics**:
+  - Turn-based gameplay with clear player indicators
+  - Visual feedback for hits, misses, and sunk ships
+  - Game state persistence using Zustand
+- **UI Components**:
+  - Responsive design that works across desktop and mobile
+  - Clean, modern interface using ShadCN UI components
+  - Toast notifications for game events and errors
 
-## Learn More
+## Technology Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **State Management**: Zustand with persistence middleware
+- **UI Components**: Shadcn UI (built on Radix UI)
+- **Styling**: Tailwind CSS
+- **Notifications**: Sonner Toast
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Game Rules
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Each player places 5 ships on their board:
 
-## Deploy on Vercel
+   - Carrier (5 cells)
+   - Battleship (4 cells)
+   - Cruiser (3 cells)
+   - Submarine (3 cells)
+   - Destroyer (2 cells)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Players take turns attacking cells on the opponent's board
+3. A hit is registered when a player attacks a cell containing an enemy ship
+4. The game ends when one player has sunk all of the opponent's ships
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Code Structure
+
+- `_store/`: Zustand store implementations for game state and scoreboard
+- `components/`: React components for the game UI
+- `lib/`: Helper functions, types, and utility code
+- `app/`: Next.js app router pages and layout
