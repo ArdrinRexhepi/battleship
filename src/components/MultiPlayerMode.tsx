@@ -170,7 +170,7 @@ const MultiPlayerMode = () => {
 
   if (gameState === "Playing" && currentPlayer != null) {
     return (
-      <div className="flex flex-col p-5">
+      <div className="flex flex-col p-5 w-full">
         <div className="flex flex-col items-center">
           <div className="flex items-center flex-col gap-2">
             <h1 className="text-2xl font-bold">
@@ -201,7 +201,7 @@ const MultiPlayerMode = () => {
             </AlertDialog>
           </div>
 
-          <div className="flex gap-12">
+          <div className="flex gap-12 flex-col-reverse md:flex-row">
             <div className="flex flex-col gap-2">
               <h2 className="text-lg font-semibold text-center">Your board</h2>
               <Board

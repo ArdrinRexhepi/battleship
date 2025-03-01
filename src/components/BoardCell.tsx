@@ -38,7 +38,7 @@ const BoardCell = ({
     <div
       key={`${row}-${column}`}
       className={cn(
-        "size-8 border border-zinc-300 bg-zinc-100 hover:cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-blue-100",
+        "size-8 border border-neutral-400/60 bg-neutral-100 hover:cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-blue-100",
 
         // Sunken ship styling (priority)
         isSunkenShip && isEnemy && "bg-green-500 hover:bg-green-400",

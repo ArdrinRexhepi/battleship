@@ -15,7 +15,7 @@ const Board = ({
 }) => {
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col border-2 border-zinc-500">
+      <div className="flex flex-col border-2 border-neutral-700">
         {board.map((row, rowIndex) => (
           <div key={rowIndex} className="flex">
             {row.map((cell, columnIndex) => (

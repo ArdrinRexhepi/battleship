@@ -4,19 +4,19 @@ import { useScoreBoard } from "@/_store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy } from "lucide-react";
 
-export default function Leaderboard() {
+const MultiplayerScores = () => {
   const { player1, player2 } = useScoreBoard();
-  const playersVplayers = [
+  const playerScores = [
     { name: "Player 1", wins: player1 },
     { name: "Player 2", wins: player2 },
   ];
 
-  const sortedPlayers = [...playersVplayers].sort((a, b) => b.wins - a.wins);
+  const sortedPlayers = [...playerScores].sort((a, b) => b.wins - a.wins);
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-white/5 border-none">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
+        <CardTitle className="text-2xl font-bold text-center text-white">
           Multiplayer Leaderboard
         </CardTitle>
       </CardHeader>
@@ -49,4 +49,6 @@ export default function Leaderboard() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default MultiplayerScores;

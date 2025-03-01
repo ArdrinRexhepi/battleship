@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Link from "next/link";
+import MultiplayerScores from "@/components/MultiplayerScores";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -49,7 +50,7 @@ export default function Home() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-8">
-              <div className="flex flex-col items-center gap-4 p-4 rounded-lg bg-white/5">
+              {/* <div className="flex flex-col items-center gap-4 p-4 rounded-lg bg-white/5">
                 <div className="rounded-full bg-blue-500/20 p-3">
                   <Ship className="h-8 w-8 text-blue-300" />
                 </div>
@@ -64,7 +65,8 @@ export default function Home() {
                     Start Solo Game
                   </Button>
                 </Link>
-              </div>
+              </div> */}
+              <MultiplayerScores />
 
               <div className="flex flex-col items-center gap-4 p-4 rounded-lg bg-white/5">
                 <div className="rounded-full bg-blue-500/20 p-3">

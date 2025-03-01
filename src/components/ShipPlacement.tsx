@@ -154,7 +154,7 @@ const ShipPlacement = ({
         {gameState === "PlayerOnePlacement" ? "Player 1" : "Player 2"}
       </h1>
       {/* Controls to select ship and direction */}
-      <div className="flex gap-2 items-center flex-col border rounded-md p-2 bg-zinc-100 max-w-2xl">
+      <div className="flex gap-2 items-center flex-col border rounded-md p-2 bg-neutral-100 max-w-2xl">
         {/* Ships we can place */}
         <div className="flex gap-2 max-sm:grid grid-cols-3">
           {getAvailableShipTypes().length > 0 ? (
@@ -163,7 +163,7 @@ const ShipPlacement = ({
                 key={shipType}
                 onClick={() => setCurrentShipType(shipType)}
                 className={cn(
-                  "rounded-sm bg-zinc-100/55 border border-zinc-400 p-2 hover:cursor-pointer hover:bg-blue-100 transition-all duration-200 w-[100px]",
+                  "rounded-sm bg-zinc-100/55 border border-neutral-400 p-2 hover:cursor-pointer hover:bg-blue-100 transition-all duration-200 w-[100px]",
                   shipType === currentShipType ? "bg-blue-200" : ""
                 )}>
                 {shipType} ({shipConfigs[shipType]} cells)
@@ -236,14 +236,12 @@ const ShipPlacement = ({
           </Button>
         </div>
       </div>
-      <div className="flex flex-col border-2 border-zinc-500">
-        <Board
-          board={board}
-          handleClick={handleCellClick}
-          showShips={true}
-          ships={placedShips}
-        />
-      </div>
+      <Board
+        board={board}
+        handleClick={handleCellClick}
+        showShips={true}
+        ships={placedShips}
+      />
     </div>
   );
 };
