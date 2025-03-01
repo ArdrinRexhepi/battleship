@@ -10,8 +10,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { createEmptyBoard } from "@/lib/helpers";
-import { GameSteps, MultiPlayerSteps, PlayerType } from "@/lib/types";
+import { createEmptyBoard, processAttack } from "@/lib/helpers";
+import {
+  CellType,
+  GameSteps,
+  MultiPlayerSteps,
+  PlayerType,
+  Ship,
+} from "@/lib/types";
 import { useState } from "react";
 import ShipPlacement from "./ShipPlacement";
 import Board from "./Board";
@@ -61,76 +67,36 @@ const MultiPlayerMode = () => {
   };
 
   const handleCellAttack = (row: number, column: number) => {
+    //Based on the player we process the attack
     if (currentPlayer === "player1") {
-      const attackedBoard = player2Board;
-      attackedBoard[row][column].isCellHit = true;
-      setPlayer2Board(attackedBoard);
-
-      //Here we check if attack was successful
-      const shipCoordinate = player2Ships.findIndex((ship) =>
-        ship.positions.some(
-          (position) => position.row === row && position.column === column
-        )
+      const { updatedBoard, updatedShips, isGameOver } = processAttack(
+        player2Board,
+        player2Ships,
+        row,
+        column
       );
-      if (shipCoordinate !== -1) {
-        const tempShips = player2Ships;
-        const posIndex = tempShips[shipCoordinate].positions.findIndex(
-          (pos) => pos.row === row && pos.column === column
-        );
 
-        if (posIndex >= 0) {
-          tempShips[shipCoordinate].positions[posIndex].isHit = true;
-          const isShipSunk = tempShips[shipCoordinate].positions.every(
-            (position) => position.isHit
-          );
-          if (isShipSunk) {
-            tempShips[shipCoordinate].hasShipSunk = true;
-          }
-          setPlayer2Ships(tempShips);
-        }
+      setPlayer2Board(updatedBoard);
+      setPlayer2Ships(updatedShips);
 
-        //if all ships have sunk then add declare winner
-        const allSunk = tempShips.every((ship) => ship.hasShipSunk);
-        if (allSunk) {
-          onGameFinish(currentPlayer);
-          return;
-        }
+      if (isGameOver) {
+        onGameFinish(currentPlayer);
+        return;
       }
-    }
-
-    if (currentPlayer === "player2") {
-      const attackedBoard = player1Board;
-      attackedBoard[row][column].isCellHit = true;
-      setPlayer1Board(attackedBoard);
-
-      //Here we check if attack was successful
-      const shipCoordinate = player1Ships.findIndex((ship) =>
-        ship.positions.some(
-          (position) => position.row === row && position.column === column
-        )
+    } else if (currentPlayer === "player2") {
+      const { updatedBoard, updatedShips, isGameOver } = processAttack(
+        player1Board,
+        player1Ships,
+        row,
+        column
       );
-      if (shipCoordinate !== -1) {
-        const tempShips = player1Ships;
-        const posIndex = tempShips[shipCoordinate].positions.findIndex(
-          (pos) => pos.row === row && pos.column === column
-        );
 
-        if (posIndex >= 0) {
-          tempShips[shipCoordinate].positions[posIndex].isHit = true;
-          const isShipSunk = tempShips[shipCoordinate].positions.every(
-            (position) => position.isHit
-          );
-          if (isShipSunk) {
-            tempShips[shipCoordinate].hasShipSunk = true;
-          }
-          setPlayer1Ships(tempShips);
-        }
-        //if all ships have sunk then add declare winner
-        const allSunk = tempShips.every((ship) => ship.hasShipSunk);
-        if (allSunk) {
-          onGameFinish(currentPlayer);
-          return;
-        }
+      setPlayer1Board(updatedBoard);
+      setPlayer1Ships(updatedShips);
+
+      if (isGameOver) {
+        onGameFinish(currentPlayer);
+        return;
       }
     }
 

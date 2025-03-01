@@ -10,7 +10,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { createEmptyBoard, isShipPlacementValid } from "@/lib/helpers";
+import {
+  autoPlaceShips,
+  createEmptyBoard,
+  isShipPlacementValid,
+  shipConfigs,
+} from "@/lib/helpers";
 import {
   CellType,
   MultiPlayerSteps,
@@ -27,13 +32,6 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "./ui/button";
 import Board from "./Board";
 
-const shipConfigs: Record<ShipType, number> = {
-  carrier: 5,
-  battleship: 4,
-  cruiser: 3,
-  submarine: 3,
-  destroyer: 2,
-};
 const ShipPlacement = ({
   board,
   setBoard,
@@ -113,6 +111,20 @@ const ShipPlacement = ({
     },
     [currentShipType, orientation, placedShips]
   );
+
+  const handleAutoPlacement = () => {
+    //We create and empty board and send it to the function and recieve
+    // a new board with placed ships data
+    const emptyBoard = createEmptyBoard();
+    const { updatedBoard, placedShips: autoPlacedShips } =
+      autoPlaceShips(emptyBoard);
+
+    setBoard(updatedBoard);
+    setPlacedShips(autoPlacedShips);
+    setCurrentShipType(null);
+
+    toast.success("Ships auto-placed successfully!");
+  };
 
   const getAvailableShipTypes = () => {
     const placedShipTypes = placedShips.map((ship) => ship.type);
@@ -194,29 +206,35 @@ const ShipPlacement = ({
           </div>
         </RadioGroup>
 
-        <AlertDialog>
-          <AlertDialogTrigger
-            className={cn(buttonVariants({ variant: "destructive" }))}>
-            Reset the board
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will reset all the board and
-                your current ship placements.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={resetAll}
-                className="hover:cursor-pointer">
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <div className="flex gap-2">
+          <AlertDialog>
+            <AlertDialogTrigger
+              className={cn(buttonVariants({ variant: "destructive" }))}>
+              Reset the board
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will reset all the board
+                  and your current ship placements.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={resetAll}
+                  className="hover:cursor-pointer">
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <Button variant="outline" onClick={handleAutoPlacement}>
+            Auto place ships
+          </Button>
+        </div>
       </div>
       <div className="flex flex-col border-2 border-zinc-500">
         <Board

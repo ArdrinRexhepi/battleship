@@ -68,28 +68,3 @@ export const useBoardState = create<BoardTypes>()(
       name: 'boardstate'
     })
   )
-
-
-// interface IGameState{
-//   gameState: 'Setup' | 'Playing' | 'GameOver';
-//   currentPlayer: PlayerType | null;
-//   winner: 'player1' | 'player2' | 'computer' | 'player' | null;
-//   setGameState: (state: 'Setup' | 'Playing' | 'GameOver') => void;
-//   setCurrentPlayer: (player: PlayerType | null ) => void;
-//   setWinner: (player: 'player1' | 'player2' | 'computer' | 'player' | null) => void;
-// }
-
-// export const useGameState = create<IGameState>()(
-//   persist(
-//     (set) => ({
-//       gameState: 'Setup',
-//       currentPlayer: null,
-//       winner: null,
-//       setGameState: (state) => set({ gameState: state }),
-//       setCurrentPlayer: (player) => set({ currentPlayer: player }),
-//       setWinner: (player) => set({ winner: player }),
-//     }),
-//   {
-//     name:'gamestate'
-//   }
-// ))
