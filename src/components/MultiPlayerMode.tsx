@@ -11,13 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { createEmptyBoard, processAttack } from "@/lib/helpers";
-import {
-  CellType,
-  GameSteps,
-  MultiPlayerSteps,
-  PlayerType,
-  Ship,
-} from "@/lib/types";
+import { GameSteps, MultiPlayerSteps, PlayerType } from "@/lib/types";
 import { useState } from "react";
 import ShipPlacement from "./ShipPlacement";
 import Board from "./Board";

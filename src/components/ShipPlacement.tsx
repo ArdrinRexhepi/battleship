@@ -24,7 +24,7 @@ import {
   ShipType,
   SinglePlayerSteps,
 } from "@/lib/types";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { toast } from "sonner";

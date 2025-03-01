@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { PlayerType } from "@/lib/types";
 import { Trophy } from "lucide-react";
-import Link from "next/link";
 import Leaderboard from "./Leaderboard";
 
 interface GameOverProps {
