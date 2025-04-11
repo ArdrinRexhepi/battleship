@@ -1,4 +1,4 @@
-## Battleship game for
+## Battleship game using Next.js 15
 
 ### Installation
 
